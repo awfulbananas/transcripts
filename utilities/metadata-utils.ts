@@ -16,12 +16,16 @@ export type VideoData = {
 }
 
 export async function getAllCategories(): Promise<string[]> {
+    console.log('fetching categories: START');
     const result = (await get(dbRoot)).val();
+    console.log('fetching categories: END');
 
     return Object.keys(result);
 }
 
 export async function getAllVideosForCategory(category: string): Promise<VideoData[]> {
+    console.log(`fetching videos for category ${category}: START`);
+
     const prefixDirectoryEntries: Dirent[] = await readdir(
         path.join(process.cwd(), 'data', 'transcripts', category),
         {
@@ -55,6 +59,7 @@ export async function getAllVideosForCategory(category: string): Promise<VideoDa
             .map((entry: Dirent): string => entry.name.split('.')[0]);
 
         for (const videoId of videoIds) {
+            console.log(`getAllVideosForCategory: opening file ${videoId}`);
             const metadata: any = JSON.parse(
                 await readFile(path.join(prefixPath, `${videoId}.metadata.json`), { encoding: 'utf8' }));
 
@@ -82,11 +87,15 @@ export async function getAllVideosForCategory(category: string): Promise<VideoDa
         }
     }
 
+    console.log(`fetching videos for category: ${category}: END`);
+
     return allVideos;
 }
 
 export async function getDatesForCategory(category: string): Promise<string[]> {
+    console.log(`fetching dates for category: ${category}: START`);
     const result = (await get(dbRoot)).child(`${category}/index/date`).val();
+    console.log(`fetching dates for category: ${category}: END`);
     return Object.keys(result);
 }
 
