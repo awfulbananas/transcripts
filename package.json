@@ -33,7 +33,7 @@
     "eslint-config-next": "^14.0.2",
     "firebase": "^10.6.0",
     "firebase-admin": "^11.11.0",
-    "firebase-tools": "^12.9.1",
+    "firebase-tools": "^13.0.2",
     "jstat": "^1.9.6",
     "lodash-es": "^4.17.21",
     "next": "^14.0.2",
